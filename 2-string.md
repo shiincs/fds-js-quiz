@@ -72,9 +72,36 @@ collectionNum('discovery');
 countChar('tomato'); -> {t: 2, o: 2, m: 1, a: 1}
 ```
 
+```js
+function countChar(str) {
+  let obj = {};
+  for(let i=0; i < str.length; i++) {
+    obj[str[i]] = 0;
+  }
+  for(let i=0; i < str.length; i++) {
+    obj[str[i]]++;
+  } 
+  return obj;
+}
+
+countChar('tomato');
+```
+
 ### 문제 5
 
 문자열을 입력받아 그 문자열이 회문(palindrome)인지 판별하는 함수를 작성하세요. (회문이란, '토마토', 'never odd or even'과 같이 뒤에서부터 읽어도 똑같이 읽히는 문자열을 말합니다.)
+
+```js
+function isPalindrome(str) {
+  const arr = str.split(' ').join('');
+  // 문자열을 공백 기준으로 분리한 배열로 만든 뒤 합쳐서 공백을 제거한 문자열을 만들고 다시 한글자씩 배열로 만든 뒤 뒤집어서 다시 문자열로 합친다.
+  const rev = str.split(' ').join('').split('').reverse().join('');
+  
+  return arr === rev;
+}
+
+isPalindrome('never odd or even');
+```
 
 ### 문제 6
 
