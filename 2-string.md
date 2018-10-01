@@ -103,6 +103,20 @@ function isPalindrome(str) {
 isPalindrome('never odd or even');
 ```
 
+강사님 답안
+```js
+const isPalindrome = (str) => {
+  for(let i=0; i <= (str.length/2)-1; i++) {
+    const left = i;
+    const right = str.length-1-i;
+    if(str[left] !== str[right]) {
+      return false;
+    }
+  }
+  return true;
+}
+```
+
 ### 문제 6
 
 문자열을 입력받아, 그 문자열의 모든 '부분 문자열'로 이루어진 배열을 반환하는 함수를 작성하세요.
@@ -113,6 +127,20 @@ subString('햄버거');
 // 결과: ['햄', '햄버', '햄버거', '버', '버거', '거']
 ```
 
+```js
+function subString(str) {
+  const arr = new Array();
+  for(let i=0; i < str.length; i++) {
+    for(let j=i+1; j <= str.length; j++) {
+      let str2 = str.substring(i, j);
+      arr.push(str2);
+    }
+  }
+  return arr;
+}
+
+subString('햄버거');
+```
 ### 문제 7
 
 문자열을 입력받아, 해당 문자열에서 중복된 문자가 제거된 새로운 문자열을 반환하는 함수를 작성하세요.
@@ -123,20 +151,89 @@ removeDuplicates('tomato'); -> 'toma'
 removeDuplicates('bartender'); -> 'bartend'
 ```
 
+```js
+function removeDuplicates(str) {
+  let newStr = '';
+  for(let i=0; i < str.length; i++) {
+    if(newStr.includes(str[i])) {
+      continue;
+    }
+    newStr += str[i];
+  }
+  return newStr;
+}
+
+removeDuplicates('bartender');
+```
 ### 문제 8
 
 이메일 주소를 입력받아, 아이디 부분을 별표(`*`)로 가린 새 문자열을 반환하는 함수를 작성하세요.
 
 - 루프로 먼저 풀어보세요.
+```js
+// 루프
+function hiddenEmail(email) {
+  for(let i=0; i < email.length; i++) {
+    if(email[i]==='@') {
+      break;
+    }
+    email = email.replace(email[i], '*');
+  }
+  return email;
+}
+```
+
 - `split` 메소드를 이용해서 풀어보세요.
+```js
+// split
+function hiddenEmail(email) {
+  let arr = email.split('@');
+  let length = arr[0].length;
+  arr.shift();
+  arr.unshift('*'.repeat(length)+'@');
+  return arr.join('');
+}
+```
 
 ### 문제 9
 
 문자열을 입력받아, 대문자는 소문자로, 소문자는 대문자로 바꾼 결과를 반환하는 함수를 작성하세요.
 
+```js
+function change(str) {
+  let newStr = '';
+  for(let i=0; i < str.length; i++) {
+    if(str[i] === str[i].toUpperCase()) {
+      newStr += str[i].toLowerCase();
+      // str[i] = str[i].toLowerCase(); -> array가 아닌 string에서는 한글자씩 바꾸는게 안된다. 그래서 string 변수 하나 만들고 거기다가 채워넣어야 한다.
+    } else {
+      newStr += str[i].toUpperCase();
+    }
+  }
+  return newStr;  
+}
+
+change('JavaScript');
+```
 ### 문제 10
 
 문자열을 입력받아, 각 단어의 첫 글자를 대문자로 바꾼 결과를 반환하는 함수를 작성하세요. (문자열에 개행이 없다고 가정합니다.)
+
+```js
+function capitalization(str) {
+  let newStr = '';
+  for(let i=0; i < str.length; i++) {
+    if(i === 0 || str[i-1] === ' ') {
+      newStr += str[i].toUpperCase();
+    } else {
+      newStr += str[i];
+    }
+  }
+  return newStr;
+}
+
+capitalization(`javascript typescript react`);
+```
 
 ### 문제 11
 
