@@ -152,6 +152,18 @@ function isPrime(x) {
 isPrime(num);
 ```
 
+강사님 답안
+```js
+function isPrime(x) {
+  for(let i=2; i < x; i++) {
+    if(x%i === 0) {
+      return false;
+    }
+  }
+  return true;
+}
+```
+
 ### 문제 8
 
 1부터 100까지의 수를 차례대로 출력하되, 자릿수에 3, 6, 9중 하나라도 포함되어 있으면 '짝!'을 대신 출력하는 프로그램을 작성하세요.
@@ -204,6 +216,27 @@ for(let i=0; i < num; i++) {
 }
 
 console.log(star);
+```
+
+강사님 답안
+```js
+function print(height) {
+  for(let i=0; i < height; i++) {
+    let stars = '';
+    for(let j=0; j < i+1; j++) {
+      stars += '* ';
+    }
+    console.log(stars);
+  }
+}
+```
+```js
+function print(height) {
+  for(let i=0; i < height; i++) {
+    const stars = '* '.repeat(i+1);
+    console.log(stars);
+  }
+}
 ```
 
 ### 문제 10
@@ -259,6 +292,24 @@ for(let i=1; i <= (num*2-1); i++) {
 }
 
 console.log(star);
+```
+
+강사님 답안
+```js
+function printLine(height, i) {
+  const n = i + 1;
+  const line = ' '.repeat(height - n) + '* '.repeat(n);
+  console.log(line);
+}
+
+function print(height) {
+  for(let i = 0; i < height; i++) {
+    printLine(height, i);
+  }
+  for(let i = height-2; i >= 0; i--) {
+    printLine(height, i);
+  }
+}
 ```
 
 ### 문제 11
