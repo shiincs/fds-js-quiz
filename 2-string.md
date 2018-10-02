@@ -195,6 +195,11 @@ function hiddenEmail(email) {
 }
 ```
 
+- 강사님 답안
+```js
+
+```
+
 ### 문제 9
 
 문자열을 입력받아, 대문자는 소문자로, 소문자는 대문자로 바꾼 결과를 반환하는 함수를 작성하세요.
@@ -239,17 +244,76 @@ capitalization(`javascript typescript react`);
 
 문자열을 입력받아, 문자열 안에 들어있는 단어 중 가장 긴 단어를 반환하는 함수를 작성하세요. (문자열에 개행이 없다고 가정합니다.)
 
+```js
+const longWord = (str) => {
+  const splitWord = str.split(' ');
+  let max = 0;
+  for(let i=1; i < splitWord.length; i++) {
+    if(splitWord[max].length < splitWord[i].length) {
+      max = i;
+    }
+  }
+  return splitWord[max];
+}
+
+longWord('hi hello world');
+```
+
 ### 문제 12
 
 문자열 `s`과 자연수 `n`을 입력받아, `s`의 첫 `n`개의 문자만으로 이루어진 새 문자열을 반환하는 함수를 작성하세요.
+
+```js
+let firstWord = (str, num) => {
+  // return str.slice(0, num);
+  return Array.from(str).splice(0, num).join('');
+}
+
+firstWord('Hello', 4);
+```
 
 ### 문제 13
 
 Camel case의 문자열을 입력받아, snake case로 바꾼 새 문자열을 반환하는 함수를 작성하세요.
 
+```js
+const camelToSnake = str => {
+  const arr = Array.from(str);
+  const arr2 = Array.from(str);
+  for(let i=1; i < arr2.length; i++) {
+    if((arr2[i-1] === arr2[i-1].toLowerCase()) && (arr2[i] === arr2[i].toUpperCase())) {
+      arr.splice(i, 1, arr[i].toLowerCase());
+      arr.splice(i, 0, '-');
+    }
+  }
+  return arr.join('');
+}
+
+camelToSnake('helloWorld');
+```
+
 ### 문제 14
 
 Snake case의 문자열을 입력받아, camel case로 바꾼 새 문자열을 반환하는 함수를 작성하세요.
+
+```js
+const snakeToCamel = str => {
+  let newStr = '';
+  for(let i=0; i < str.length; i++) {
+    if(str[i] === '-') {
+      newStr += str[i+1].toUpperCase();
+      continue;
+    } else if(str[i-1] === '-') {
+      continue;
+    } else {
+      newStr += str[i];
+    }    
+  }
+  return newStr;
+}
+
+snakeToCamel('hello-world');
+```
 
 ### 문제 15
 
@@ -260,6 +324,27 @@ Snake case의 문자열을 입력받아, camel case로 바꾼 새 문자열을 �
 split('Hello World'); -> ['Hello World']
 split('Hello World', ' '); -> ['Hello', 'World']
 split('let,const,var', ',') -> ['let', 'const', 'var']
+```
+
+```js
+const split = (item, seperator) => {
+  const arr = [];
+  let index = 0;
+
+  for(let i=0; i < item.length; i++) {
+    if(item[i] === seperator) {
+      arr.push(item.slice(index, i));
+      index = i + 1;
+    } else if(i === item.length-1) {
+      // seperator가 없을 경우 여기로 들어와서 실행된다.
+      arr.push(item.slice(index, item.length));
+    }
+  }
+  return arr;
+}
+
+split('Hello World');
+split('let,const,var', ',');
 ```
 
 ### 문제 16
