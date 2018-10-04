@@ -259,6 +259,17 @@ const longWord = (str) => {
 longWord('hi hello world');
 ```
 
+강사님 답안
+```js
+function longestWord(input) {
+  const splitted = input.split(' ')
+  splitted.sort((x, y) => y.length - x.length)
+  return splitted[0]
+}
+
+longestWord('hello fun javascript')
+```
+
 ### 문제 12
 
 문자열 `s`과 자연수 `n`을 입력받아, `s`의 첫 `n`개의 문자만으로 이루어진 새 문자열을 반환하는 함수를 작성하세요.
@@ -283,13 +294,27 @@ const camelToSnake = str => {
   for(let i=1; i < arr2.length; i++) {
     if((arr2[i-1] === arr2[i-1].toLowerCase()) && (arr2[i] === arr2[i].toUpperCase())) {
       arr.splice(i, 1, arr[i].toLowerCase());
-      arr.splice(i, 0, '-');
+      arr.splice(i, 0, '_');
     }
   }
   return arr.join('');
 }
 
 camelToSnake('helloWorld');
+```
+
+강사님 답안
+```js
+function toSnakeCase(input) {
+  let memory = ''
+  for(let i=0; i < input.length; i++) {
+    if(i !== 0 && input[i] === input[i].toUpperCase()) {
+      memory += '_'
+    }
+    memory += input[i].toLowerCase()
+  }
+  return memory
+}
 ```
 
 ### 문제 14
@@ -303,7 +328,7 @@ const snakeToCamel = str => {
     if(str[i] === '-') {
       newStr += str[i+1].toUpperCase();
       continue;
-    } else if(str[i-1] === '-') {
+    } else if(str[i-1] === '_') {
       continue;
     } else {
       newStr += str[i];
@@ -345,6 +370,13 @@ const split = (item, seperator) => {
 
 split('Hello World');
 split('let,const,var', ',');
+```
+
+강사님 답안
+```js
+function split(input, sep) {
+  
+}
 ```
 
 ### 문제 16
