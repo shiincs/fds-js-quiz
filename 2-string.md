@@ -372,11 +372,67 @@ split('Hello World');
 split('let,const,var', ',');
 ```
 
-강사님 답안
+강사님 답안(1)
 ```js
-function split(input, sep) {
-  
+// 한 글자 짜리 separator만 지원하는 함수
+function split(input, sep) { // 'separator'
+  // 현재 보고 있는 단어
+  let memory = ''
+  let arr = []
+  for (let i = 0; i < input.length; i++) {
+    if (input[i] !== sep) {
+      memory += input[i]
+    } else {
+      arr.push(memory)
+      memory = ''
+    }
+  }
+  arr.push(memory)
+  return arr 
 }
+```
+
+강사님 답안(2)
+```js
+// 길이가 1 이상인 separator에 대해서도 동작하는 split 함수
+// 단순 루프를 사용한 버전
+// 아이디어: 한 글자씩 보면서, separator를 발견하면 그 이전 부분까지의 문자열을 배열에 추가한다.
+function split(input, separator) {
+  let memory = ''
+  // sepIndex: separator 일지도 모르는 부분의 첫 인덱스를 저장하는 변수.
+  // separator가 아닌 것 같은 부분을 보고 있을 때는 null을 저장한다.
+  let sepIndex = null
+  let arr = []
+  for (let i = 0; i < input.length; i++) {
+    memory += input[i]
+    // separator를 보고 있는 중이 아니라면
+    if (sepIndex == null) {
+
+      // separator와 첫글자가 일치하는 경우라면 (separator일지도 모른다!)
+      if (input[i] === separator[0]) {
+        sepIndex = i
+      }
+    }
+
+    // separator일지도 모르는 부분을 보고 있는 중이고, separator과 글자가 일치한다면
+    if (sepIndex != null && input[i] === separator[i - sepIndex]) {
+      // separator의 끝부분까지 모두 일치해서, 지금까지 본 것이 separator라는 결론을 내릴 수 있다면
+      if (i - sepIndex === separator.length - 1) {
+        arr.push(memory.slice(0, memory.length - separator.length))
+        memory = ''
+        sepIndex = null
+      }
+    } else {
+      // 'separator인가?' 하고 보고 있었지만 보다보니 separator와 글자가 일치하지 않는다면
+      sepIndex = null
+    }
+  }
+  arr.push(memory)
+  return arr
+}
+
+console.log(split('javascript,python,java', ','))
+console.log(split('javascriptAndpythonAndjava', 'And'))
 ```
 
 ### 문제 16
