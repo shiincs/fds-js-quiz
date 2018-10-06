@@ -117,6 +117,29 @@ const addArray = (arr1, arr2) => {
 addArray([1, 2, 3, 5, 6], [4, 5, 6, 7])
 ```
 
+```js
+// 강사님 답안
+function addArray(arr1, arr2) {
+  let longer
+  let shorter
+  if(arr1.length > arr2.length) {
+    longer = arr1.slice() // 원본 배열이 바뀐다는 문제를 해결하기 위해 배열을 복사해서 사본을 만든다.
+    shorter = arr2.slice()
+  } else {
+    longer = arr2.slice()
+    shorter = arr1.slice()
+  }
+  for(let i=0; i < shorter.length; i++) {
+    longer[i] += shorter[i]
+  }
+  return longer
+}
+
+const ARR1 = [1, 2, 3]
+const ARR2 = [4, 5, 6, 7]
+addArray(ARR1, ARR2)
+```
+
 ### 문제 6
 
 배열을 입력받아, 배열의 요소 중 두 개를 선택하는 조합을 모두 포함하는 배열을 작성하세요.
@@ -135,6 +158,21 @@ const combination = arr => {
       innerArr.push(arr[i])
       innerArr.push(arr[j])
       newArr.push(innerArr)
+    }    
+  }
+  return newArr
+}
+
+combination([1, 2, 3])
+```
+
+강사님 답안
+```js
+const combination = arr => {
+  const newArr = new Array()
+  for(let i=0; i < arr.length - 1; i++) {
+    for(let j=i+1; j < arr.length; j++) {
+      newArr.push([arr[i], arr[j]])
     }    
   }
   return newArr
@@ -178,6 +216,47 @@ const coins = (price, coins) => {
 coins(263, [100, 50, 10, 5, 1]);
 ```
 
+강사님 답안(1)
+```js
+function coins(input, coinTypes) {
+  // coinTypes를 내림차순 정렬
+  coinTypes.sort((x, y) => y - x)
+  // 남은 액수
+  let remain = input
+  // 현재 내가 보고 있는 동전
+  let currentIndex = 0
+  while(remain > 0 && currentIndex < coinTypes.length) {  // 더이상 가진 동전으로 뺄 수 없을 경우를 방어해야 한다.
+    // 남은 액수가 내가 지금 보고있는 동전보다 크거나 같으면
+    if(remain >= coinTypes[currentIndex]) {
+      console.log(coinTypes[currentIndex])
+      remain -= coinTypes[currentIndex]
+    } else {
+      // 다음 동전으로 넘어간다.
+      currentIndex++
+    }
+  }
+}
+
+coins(263, [50, 100, 10, 5]);
+```
+
+강사님 답안(2)
+```js
+function coins(input, coinTypes) {
+  // coinTypes를 내림차순 정렬
+  coinTypes.sort((x, y) => y - x)
+  // 남은 액수
+  let remain = input
+  // 현재 내가 보고 있는 동전
+  for(let i=0; i < coinTypes.length; i++) {
+    while(coinTypes[i] <= remain) {
+      remain -= coinTypes[i]
+      console.log(coinTypes[i])
+    }
+  }
+}
+```
+
 ### 문제 8
 
 수 타입의 값만 들어있는 배열을 입력받아, 해당 배열을 오름차순 정렬하는 함수를 작성하세요. (`Array.prototype.sort`를 사용하지 않고 작성해보세요. [선택 정렬](https://ko.wikipedia.org/wiki/%EC%84%A0%ED%83%9D_%EC%A0%95%EB%A0%AC)을 참고하세요.)
@@ -198,4 +277,233 @@ const sortAscending = arr => {
 }
 
 sortAscending([5000, 1, 20, 3, 400])
+```
+
+### 문제 9
+
+배열을 입력받아, 해당 배열에 들어있는 요소들 중 최대값을 찾는 함수를 작성하세요. (루프 & reduce를 이용하세요)
+
+예:
+```
+max([3, 1, 4, 5, 2]) // -> 5
+```
+
+```
+// reduce 이용
+const max = arr => {
+  // reduce를 쓸 때
+  // '누적값의 역할'이 무엇인지를 잘 정하는 것이 중요하다.
+
+  // 누적값: 지금까지 봤던 숫자 중에 제일 큰 수
+  return arr.reduce((acc, item) => { 
+    // 안에 들어있는 함수의 반환값이, 다음 단계의 누적값이 된다.
+    if(acc > item) {
+      return acc
+    } else {
+      return item
+    }
+  }, 0)
+}
+```
+
+```
+// loop 이용
+const max = arr => {
+  let max = -Infinity;
+  for(const item of arr) {
+    if(max < item) {
+      max = item;
+    }
+  }
+  return max;
+}
+
+max([-1, -2, -7, -3, -5, -4])
+```
+
+### 문제 10
+
+2차원 배열을 입력받아 1차원 배열로 바꾸는 함수를 작성하세요. (루프 & reduce를 이용하세요)
+
+예:
+```
+flatten([
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9]
+]) // -> [1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+
+```
+// reduce 이용
+const flatten = arr => {
+  return arr.reduce((acc, item) => {
+    // Array 객체의 concat 메서드는 한 개 이상의 배열을 인수로 받아서 메서드를 호출한 배열의 끝에 인수로 받은 배열의 원소를 추가한다. 이렇게 합쳐진 배열은 새로운 배열로 반환된다.
+    return acc.concat(item)
+  }, [])
+}
+```
+
+```
+// loop 이용
+function flatten(arr) {
+  const newArr = new Array();
+  // i 루프는 중간 배열을 뽑아내기 위한 루프
+  for(let i=0; i < arr.length; i++) {
+    // j 루프는 중간 배열 내부의 원소들을 뽑아내기 위한 루프
+    for(let j=0; j < arr[i].length; j++) {
+      newArr.push(arr[i][j])
+    }
+  }
+  return newArr
+}
+
+flatten([
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9]
+])
+```
+
+### 문제 11
+
+(3 * 3) 빙고 판을 표현한 배열을 입력받아, 빙고인 경우 true, 아니면 false를 반환하는 함수를 작성하세요. (단, 칸이 비어있는 경우는 0, 칸이 채워져 있는 경우는 1로 표현합니다.)
+
+예:
+```
+bingo([
+  [0, 1, 0],
+  [0, 1, 1],
+  [0, 0, 1]
+]) // -> false
+
+bingo([
+  [1, 1, 0],
+  [0, 1, 1],
+  [0, 0, 1]
+]) // -> true
+
+bingo([
+  [0, 1, 0],
+  [0, 1, 1],
+  [0, 1, 1]
+]) // -> true
+```
+
+```
+// 루프를 사용하긴 했지만 노가다 그 자체...
+const bingo = arr => {
+  // 수평 빙고 확인
+  const isHorizontal = arr.some(item => item.every(item => item === 1))
+
+  // 수직 빙고 확인
+  const verticalArr = []
+  for(let i=0; i < arr.length; i++) {
+    const innerArr = []
+    for(let j=0; j < arr[i].length; j++) {      
+      innerArr.push(arr[j][i])
+    }
+    verticalArr.push(innerArr)
+  }
+  const isVertical = verticalArr.some(item => item.every(item => item === 1))
+
+  // 왼->오 대각선 빙고 확인
+  let leftTopToRightBottom;
+  for(let i=0; i < arr.length; i++) {
+    for(let j=0; j < arr.length; j++) {
+      if(i===j) {
+        leftTopToRightBottom = (arr[i][j] === 1)
+      }
+    }
+  }
+  // 오 -> 왼 대각선 빙고 확인
+  let rightTopToLeftBottom = true
+  for(let i=0; i < arr.length; i++) {
+    for(let j=arr.length-1-i; j >= 0; j--) {
+      if(arr[i][j] === 1) {
+        break
+      } else if(arr[i][j] !== 1) {
+        rightTopToLeftBottom = false
+        break
+      }
+    }
+  }
+
+  console.log(`수평 빙고: ${isHorizontal}`);
+  console.log(`수직 빙고: ${isVertical}`);
+  console.log(`왼->오 대각선: ${leftTopToRightBottom}`);
+  console.log(`오->왼 대각선: ${rightTopToLeftBottom}`);
+
+  if(isHorizontal || isVertical || leftTopToRightBottom || rightTopToLeftBottom) {
+    return `빙고!`
+  } else {
+    return `빙고가 없습니다 ㅠㅠ`
+  }
+}
+
+bingo([
+  [1, 1, 1],
+  [1, 1, 0],
+  [1, 1, 1]
+]) // -> true
+```
+### 문제 12
+
+(9 * 9) 오목 판을 표현한 배열을 입력받아, 흑이 이긴 경우 1, 백이 이긴 경우 2, 아무도 이기지 않은 경우 0을 반환하는 함수를 작성하세요. (단, 칸이 비어있는 경우는 0, 흑은 1, 백은 2로 표현합니다.)
+
+예:
+```
+omok([
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 1, 0, 0, 0, 2, 0, 0],
+  [0, 0, 0, 1, 0, 0, 2, 0, 0],
+  [0, 0, 0, 0, 1, 0, 2, 0, 0],
+  [0, 0, 0, 0, 0, 1, 2, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+]) // -> 0
+
+omok([
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 1, 0, 0, 0, 2, 0, 0],
+  [0, 0, 0, 1, 0, 0, 2, 0, 0],
+  [0, 0, 0, 0, 1, 0, 2, 0, 0],
+  [0, 0, 0, 0, 0, 1, 2, 0, 0],
+  [0, 0, 0, 0, 0, 0, 1, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+]) // -> 1
+
+omok([
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 1, 0, 0, 0, 2, 0, 0],
+  [0, 0, 0, 1, 0, 0, 2, 0, 0],
+  [0, 0, 0, 0, 1, 0, 2, 0, 0],
+  [0, 0, 0, 0, 0, 1, 2, 0, 0],
+  [0, 0, 0, 0, 0, 0, 2, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+]) // -> 2
+```
+
+### 문제 13
+
+배열을 입력받아, 요소 중 아무거나 하나를 골라서 반환하는 함수를 작성하세요.
+
+예:
+```
+randomItem([1, 2, 3, 4, 5]) // 1, 2, 3, 4, 5 중 아무거나 반환
+```
+
+### 문제 14
+
+배열을 입력받아, 요소들의 순서를 뒤섞은 새 배열을 반환하는 함수를 작성하세요. (단, 원본 배열이 변경되어서는 안 됩니다.)
+
+예:
+```
+shuffle([1, 2, 3, 4, 5]) // [3, 1, 4, 5, 2] 와 같이 순서가 뒤섞인 새 배열 반환
 ```
