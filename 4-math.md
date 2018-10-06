@@ -31,3 +31,26 @@ ceilBy5(37); -> 40
 ### 문제 7
 
 수 타입의 값으로만 이루어진 배열을 입력받아, 그 값들의 표준편차를 구하는 함수를 작성하세요.
+
+강사님 답안
+```js
+const stdDev = arr => {
+  // arr의 평균 구하기
+  const sum = arr.reduce((acc, item) => acc + item, 0)
+  const mean = (sum/arr.length)
+  console.log(`mean: ${mean}`)
+  // 각 요소에 대한 편차 구하기 (편차 = 값 - 평균)
+  const ps = arr.map(item => item - mean)
+  console.log(`ps: ${ps}`)
+  // 각 요소에 대해 제곱하기
+  const square = ps.map(item => item ** 2)
+  console.log(`square: ${square}`)
+  // 제곱한 배열의 평균 구하기
+  const variation = (square.reduce((acc, item) => acc + item, 0) / square.length)
+  console.log(`variation: ${variation}`)
+  // 루트 씌우기
+  return Math.sqrt(variation) // sqrt === square root (제곱근)
+}
+
+stdDev([1, 2, 3, 4, 5])
+```
