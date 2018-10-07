@@ -499,6 +499,15 @@ omok([
 randomItem([1, 2, 3, 4, 5]) // 1, 2, 3, 4, 5 중 아무거나 반환
 ```
 
+```js
+const randomItem = arr => {
+  const index = Math.floor(Math.random() * arr.length)
+  return arr[index]
+}
+
+randomItem([1, 2, 3, 4, 5])
+```
+
 ### 문제 14
 
 배열을 입력받아, 요소들의 순서를 뒤섞은 새 배열을 반환하는 함수를 작성하세요. (단, 원본 배열이 변경되어서는 안 됩니다.)
@@ -506,4 +515,37 @@ randomItem([1, 2, 3, 4, 5]) // 1, 2, 3, 4, 5 중 아무거나 반환
 예:
 ```
 shuffle([1, 2, 3, 4, 5]) // [3, 1, 4, 5, 2] 와 같이 순서가 뒤섞인 새 배열 반환
+```
+
+```js
+const shuffle = arr => {
+  const newArr = []
+  for(let i=0; i < Infinity; i++) {
+    const randomIndex = Math.floor(Math.random() * arr.length)
+    if(!newArr.includes(arr[randomIndex])) {
+      newArr.push(arr[randomIndex])
+    }
+    if(newArr.length === arr.length) {
+      break
+    }
+  }
+  return newArr
+}
+
+shuffle([1, 2, 3, 4, 5])
+```
+
+```js
+function shuffle(arr) {
+  const newArr = arr.slice()
+  for(let i=newArr.length-1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+  }
+  console.log(`원본 배열: [${arr}]`)
+  console.log(`새 배열: [${newArr}]`)
+  return newArr
+}
+
+shuffle([1, 2, 3, 4, 5])
 ```
