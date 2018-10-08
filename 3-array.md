@@ -408,14 +408,20 @@ const bingo = arr => {
   const isVertical = verticalArr.some(item => item.every(item => item === 1))
 
   // 왼->오 대각선 빙고 확인
-  let leftTopToRightBottom;
+  let leftTopToRightBottom = true;
   for(let i=0; i < arr.length; i++) {
     for(let j=0; j < arr.length; j++) {
       if(i===j) {
-        leftTopToRightBottom = (arr[i][j] === 1)
+        if(arr[i][j] === 1) {
+          break
+        } else if(arr[i][j] !== 1) {
+          leftTopToRightBottom = false
+          break
+        }        
       }
     }
   }
+  
   // 오 -> 왼 대각선 빙고 확인
   let rightTopToLeftBottom = true
   for(let i=0; i < arr.length; i++) {
