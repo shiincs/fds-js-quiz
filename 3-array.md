@@ -453,6 +453,7 @@ bingo([
   [1, 1, 1]
 ]) // -> true
 ```
+
 ### 문제 12
 
 (9 * 9) 오목 판을 표현한 배열을 입력받아, 흑이 이긴 경우 1, 백이 이긴 경우 2, 아무도 이기지 않은 경우 0을 반환하는 함수를 작성하세요. (단, 칸이 비어있는 경우는 0, 흑은 1, 백은 2로 표현합니다.)
@@ -496,6 +497,69 @@ omok([
 ]) // -> 2
 ```
 
+```js
+const omok = arr => {
+  let newArr = []
+
+  // 수평 오목
+  for(let i=0; i < arr.length; i++) {
+    for(let j=0; j < arr[i].length-(arr[i].length-5); j++) {
+      // newArr = arr[i].slice(j, j+5)
+      if(arr.some(item => item.slice(j, j+5).every(item => item === 1))) {
+        return 1
+      } else if(arr.some(item => item.slice(j, j+5).every(item => item === 2))) {
+        return 2
+      }
+    }
+  }
+
+  // 수직 오목
+  // 수직 열을 수평 배열로 만들어서 저장한다.
+  for(let i=0; i < arr.length; i++) {
+    let innerArr = []
+    for(let j=0; j < arr[i].length; j++) {
+      innerArr.push(arr[j][i])
+    }
+    newArr.push(innerArr)
+  }
+  // 새로운 배열을 수평 오목 판별법으로 판별한다.
+  for(let i=0; i < newArr.length; i++) {
+    for(let j=0; j < newArr[i].length-(newArr[i].length-5); j++) {
+      // newArr = arr[i].slice(j, j+5)
+      if(newArr.some(item => item.slice(j, j+5).every(item => item === 1))) {
+        return 1
+      } else if(newArr.some(item => item.slice(j, j+5).every(item => item === 2))) {
+        return 2
+      }
+    }
+  }
+  
+  // 왼->오 대각선 오목
+  for(let i=0; i < arr.length; i++) {
+    for(let j=0; j < arr[i].length; j++) {
+      if(arr[i][j]===1 && arr[i+1][j+1]===1 && arr[i+2][j+2]===1 && arr[i+3][j+3]===1 && arr[i+4][j+4]===1) {
+        return 1
+      } else if(arr[i][j]===2 && arr[i+1][j+1]===2 && arr[i+2][j+2]===2 && arr[i+3][j+3]===2 && arr[i+4][j+4]===2) {
+        return 2
+      }
+    }
+  }
+  
+  // 오->왼 대각선 오목
+  for(let i=0; i < arr.length; i++) {
+    for(let j=arr[i].length-1; j >= 0 ; j--) {
+      if(arr[i][j]===1 && arr[i+1][j-1]===1 && arr[i+2][j-2]===1 && arr[i+3][j-3]===1 && arr[i+4][j-4]===1) {
+        return 1
+      } else if(arr[i][j]===2 && arr[i+1][j-1]===2 && arr[i+2][j-2]===2 && arr[i+3][j-3]===2 && arr[i+4][j-4]===2) {
+        return 2
+      }
+    }
+  }
+
+  // 모든 판별법에 해당되지 않는다면 0을 return 한다.  
+  return 0
+}
+```
 ### 문제 13
 
 배열을 입력받아, 요소 중 아무거나 하나를 골라서 반환하는 함수를 작성하세요.
