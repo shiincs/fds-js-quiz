@@ -78,6 +78,7 @@ shuffle([1, 2, 3, 4, 5])
 임의의 HTML 색상 코드를 반환하는 함수를 작성하세요.
 
 ```js
+// rgb 코드로 반환
 const randomColorCode = () => {
   const arr = [...Array(3)].reduce(acc => acc.concat(Math.floor(Math.random() * 256)), [])
   
@@ -85,6 +86,19 @@ const randomColorCode = () => {
 }
 
 randomColorCode()
+```
+
+```js
+// 16진수 코드로 반환
+const randomColorCode = () => {
+  const sample = '0123456789ABCDEF'
+  const arr = [...Array(6)].reduce(acc => acc.concat(sample[Math.floor(Math.random() * sample.length)]), '')
+  
+  return `#${arr}`
+}
+
+randomColorCode()
+
 ```
 
 ### 문제 6
