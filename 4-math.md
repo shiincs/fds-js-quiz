@@ -54,6 +54,13 @@ ceilBy5(1332)
 ceilBy5(1337)
 ```
 
+강사님 답안
+```js
+function ceilBy5(input) {
+  return Math.ceil(input / 5) * 5
+}
+```
+
 ### 문제 4
 
 배열을 입력받아, 요소들의 순서를 뒤섞은 새 배열을 반환하는 함수를 작성하세요.
@@ -73,6 +80,19 @@ const shuffle = arr => {
 shuffle([1, 2, 3, 4, 5])
 ```
 
+강사님 아이디어
+```js
+function shuffle(input) {
+  const newArr = []
+  for(let i=input.length-1; i >= 0; i--) {
+    const randomIndex = Math.floor(Math.random() * input.length)
+    const element = input[randomIndex]
+    newArr.push(element)
+    input.splice(input.indexOf(element), 1)
+  }
+  return newArr
+}
+```
 ### 문제 5
 
 임의의 HTML 색상 코드를 반환하는 함수를 작성하세요.
@@ -113,6 +133,18 @@ function randomString(length) {
 }
 
 randomString(20)
+```
+
+유니코드 코드포인트로 랜덤 문자 생성하기
+```js
+// 이모지를 제외한 기본 다국어 평면 코드는 16진수 4자리의 수를 갖는다. (U+XXXX) -> 10진수로 바꾸면 2의 16승(0~65535)
+function randomString(n) {
+  let result = ''
+  for(let i=0; i < n; i++) {
+    result += String.fromCodePoint(Math.floor(Math.random() * 65536))
+  }
+  return result
+}
 ```
 
 ### 문제 7
