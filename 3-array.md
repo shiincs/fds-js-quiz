@@ -415,24 +415,30 @@ const bingo = arr => {
   }
   const isVertical = verticalArr.some(item => item.every(item => item === 1))
 
-  // 왼->오 대각선 오목
-  for(let i=0; i < arr.length-4; i++) {
-    for(let j=0; j < arr[i].length-4; j++) {
-        if(arr[i][j]===1 && arr[i+1][j+1]===1 && arr[i+2][j+2]===1 && arr[i+3][j+3]===1 && arr[i+4][j+4]===1) {
-          return 1
-        } else if(arr[i][j]===2 && arr[i+1][j+1]===2 && arr[i+2][j+2]===2 && arr[i+3][j+3]===2 && arr[i+4][j+4]===2) {
-          return 2
-        }
+  // 왼->오 대각선 빙고 확인
+  let leftTopToRightBottom = true;
+  for(let i=0; i < arr.length; i++) {
+    for(let j=0; j < arr.length; j++) {
+      if(i===j) {
+        if(arr[i][j] === 1) {
+          break
+        } else if(arr[i][j] !== 1) {
+          leftTopToRightBottom = false
+          break
+        }        
+      }
     }
   }
   
-  // 오->왼 대각선 오목
-  for(let i=0; i < arr.length-4; i++) {
-    for(let j=arr[i].length-1; j >= arr[i].length-5 ; j--) {
-      if(arr[i][j]===1 && arr[i+1][j-1]===1 && arr[i+2][j-2]===1 && arr[i+3][j-3]===1 && arr[i+4][j-4]===1) {
-        return 1
-      } else if(arr[i][j]===2 && arr[i+1][j-1]===2 && arr[i+2][j-2]===2 && arr[i+3][j-3]===2 && arr[i+4][j-4]===2) {
-        return 2
+  // 오 -> 왼 대각선 빙고 확인
+  let rightTopToLeftBottom = true
+  for(let i=0; i < arr.length; i++) {
+    for(let j=arr.length-1-i; j >= 0; j--) {
+      if(arr[i][j] === 1) {
+        break
+      } else if(arr[i][j] !== 1) {
+        rightTopToLeftBottom = false
+        break
       }
     }
   }
@@ -537,19 +543,19 @@ const omok = arr => {
   }
   
   // 왼->오 대각선 오목
-  for(let i=0; i < arr.length; i++) {
-    for(let j=0; j < arr[i].length; j++) {
-      if(arr[i][j]===1 && arr[i+1][j+1]===1 && arr[i+2][j+2]===1 && arr[i+3][j+3]===1 && arr[i+4][j+4]===1) {
-        return 1
-      } else if(arr[i][j]===2 && arr[i+1][j+1]===2 && arr[i+2][j+2]===2 && arr[i+3][j+3]===2 && arr[i+4][j+4]===2) {
-        return 2
-      }
+  for(let i=0; i < arr.length-4; i++) {
+    for(let j=0; j < arr[i].length-4; j++) {
+        if(arr[i][j]===1 && arr[i+1][j+1]===1 && arr[i+2][j+2]===1 && arr[i+3][j+3]===1 && arr[i+4][j+4]===1) {
+          return 1
+        } else if(arr[i][j]===2 && arr[i+1][j+1]===2 && arr[i+2][j+2]===2 && arr[i+3][j+3]===2 && arr[i+4][j+4]===2) {
+          return 2
+        }
     }
   }
   
   // 오->왼 대각선 오목
-  for(let i=0; i < arr.length; i++) {
-    for(let j=arr[i].length-1; j >= 0 ; j--) {
+  for(let i=0; i < arr.length-4; i++) {
+    for(let j=arr[i].length-1; j >= arr[i].length-5 ; j--) {
       if(arr[i][j]===1 && arr[i+1][j-1]===1 && arr[i+2][j-2]===1 && arr[i+3][j-3]===1 && arr[i+4][j-4]===1) {
         return 1
       } else if(arr[i][j]===2 && arr[i+1][j-1]===2 && arr[i+2][j-2]===2 && arr[i+3][j-3]===2 && arr[i+4][j-4]===2) {
