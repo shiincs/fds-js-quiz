@@ -398,7 +398,7 @@ bingo([
 ]) // -> true
 ```
 
-```
+```js
 // 루프를 사용하긴 했지만 노가다 그 자체...
 const bingo = arr => {
   // 수평 빙고 확인
@@ -460,6 +460,64 @@ bingo([
   [1, 1, 0],
   [1, 1, 1]
 ]) // -> true
+```
+
+강사님 답안:
+```js
+// 강사님 답안
+function bingo(arr) {
+  // 수평 빙고
+  for(let i=0; i < 3; i++) {
+    // 이제까지 본 것이 전부 x 표시가 되어있다.
+    let checked = true
+    for(let j=0; j < 3; j++) {
+      if(arr[i][j] === 0) {
+        checked = false
+      }
+    }
+    if(checked) {
+      return true
+    }
+  }
+
+  // 수직 빙고
+  for(let i=0; i < 3; i++) {
+    // 이제까지 본 것이 전부 x 표시가 되어있다.
+    let checked = true
+    for(let j=0; j < 3; j++) {
+      if(arr[j][i] === 0) {
+        checked = false
+      }
+    }
+    if(checked) {
+      return true
+    }
+  }
+
+  // 왼->오 대각선 빙고
+  let checked = true
+  for(let i=0; i < 3; i++) {
+    if(arr[i][i] === 0) {
+      checked = false
+    }
+  }
+  if(checked) {
+    return true
+  }
+
+  // 오->왼 대각선 빙고
+  let checked2 = true
+  for(let i=0; i < 3; i++) {
+    if(arr[i][2-i] === 0) {
+      checked2 = false
+    }
+  }
+  if(checked2) {
+    return true
+  }
+
+  return false
+}
 ```
 
 ### 문제 12
@@ -568,6 +626,32 @@ const omok = arr => {
   return 0
 }
 ```
+
+강사님 답안
+```js
+// 강사님 답안(수평 오목만)
+function omok(arr) {
+  // 수평 오목
+  for(let i=0; i < 9; i++) {
+    let currentPlayer;
+    let count;
+    for(let j=0; j < 9; j++) {
+      // 새로운 플레이어를 발견했을 때
+      if(currentPlayer !== arr[i][j]) {
+        currentPlayer = arr[i][j]
+        count = 1
+      } else {
+        count++
+      }
+      // 만약 1이나 2가 5번 연속되어 있으면
+      if((currentPlayer === 1 || currentPlayer === 2) && count === 5) {
+        return currentPlayer
+      }
+    }
+  }
+}
+```
+
 ### 문제 13
 
 배열을 입력받아, 요소 중 아무거나 하나를 골라서 반환하는 함수를 작성하세요.
